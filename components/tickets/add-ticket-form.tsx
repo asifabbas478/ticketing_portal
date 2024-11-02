@@ -33,7 +33,37 @@ import { Plus, Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { Database } from '@/lib/supabase/database.types';
+
+// Add these type definitions at the top of your file
+type Database = {
+  public: {
+    Tables: {
+      categories: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          created_at: string
+          updated_at: string
+        }
+      }
+      tickets: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          status: 'open' | 'in_progress' | 'resolved' | 'closed'
+          priority: 'low' | 'medium' | 'high' | 'urgent'
+          category_id: string
+          created_by: string
+          assigned_to?: string
+          created_at: string
+          updated_at: string
+        }
+      }
+    }
+  }
+}
 
 const ticketSchema = z.object({
   title: z.string().min(1, 'Title is required'),
